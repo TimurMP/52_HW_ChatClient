@@ -14,32 +14,22 @@ public class LauncherAppl {
         String userName;
         String serverIP = "127.0.0.1";
         int port = 9000;
-        try(Socket socket = new Socket(serverIP, port)) {
+        try (Socket socket = new Socket(serverIP, port)) {
             MsgSender sender = new MsgSender(socket, userName());
             MsgReceiver receiver = new MsgReceiver(socket);
             System.out.println("You can start chatting!");
             Thread senderThread = new Thread(sender);
-            Thread receiverThread= new Thread(receiver);
+            Thread receiverThread = new Thread(receiver);
+            receiverThread.setDaemon(true);
             senderThread.start();
-//            receiverThread.setDaemon(true);
             receiverThread.start();
-
-//            while (sender.isClientIsActive()){
-//                executorService.execute(sender);
-//
-//            }
-
-           senderThread.join();
-
-
-
-
-
+            senderThread.join();
 
         } catch (IOException e) {
             System.out.println("Error 400 --- Server is not reachable, please try again later.");
 
         }
+        Thread.sleep(1000);
 
 
     }
@@ -49,7 +39,6 @@ public class LauncherAppl {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         return bufferedReader.readLine();
     }
-
 
 
 }

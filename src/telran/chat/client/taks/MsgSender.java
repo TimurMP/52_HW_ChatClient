@@ -2,9 +2,9 @@ package telran.chat.client.taks;
 
 import java.io.*;
 import java.net.Socket;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
-public class MsgSender implements Runnable{
+public class MsgSender implements Runnable {
     Socket socket;
     String userName;
     boolean clientIsActive = true;
@@ -20,18 +20,22 @@ public class MsgSender implements Runnable{
 
     @Override
     public void run() {
-        try(Socket socket = this.socket) {
+        try (Socket socket = this.socket) {
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            String message = (userName + " wrote at " + LocalTime.now() + " :\n" + bufferedReader.readLine());
 
-            while(!"exit".equalsIgnoreCase(message)) {
-                oos.writeObject(message);
+
+            String message = (bufferedReader.readLine());
+            String fullMessage = (userName + " wrote " + "at " + LocalDateTime.now() + "\n" + message);
+
+
+            while (!"leave".equalsIgnoreCase(message)) {
+                oos.writeObject(fullMessage);
+
                 System.out.println("-------------------------------\n");
-                message = (userName + " wrote at " + LocalTime.now() + " :\n" + bufferedReader.readLine());
+                message = bufferedReader.readLine();
 
             }
-//            clientIsActive = false;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
