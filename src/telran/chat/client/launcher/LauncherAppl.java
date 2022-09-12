@@ -12,8 +12,16 @@ public class LauncherAppl {
 
     public static void main(String[] args) throws InterruptedException {
         String userName;
+
         String serverIP = "127.0.0.1";
         int port = 9000;
+        joinChat(serverIP, port);
+        Thread.sleep(1000);
+
+
+    }
+
+    private static void joinChat(String serverIP, int port) throws InterruptedException {
         try (Socket socket = new Socket(serverIP, port)) {
             MsgSender sender = new MsgSender(socket, userName());
             MsgReceiver receiver = new MsgReceiver(socket);
@@ -29,9 +37,6 @@ public class LauncherAppl {
             System.out.println("Error 400 --- Server is not reachable, please try again later.");
 
         }
-        Thread.sleep(1000);
-
-
     }
 
     public static String userName() throws IOException {
