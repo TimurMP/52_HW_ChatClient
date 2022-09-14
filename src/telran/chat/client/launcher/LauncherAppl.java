@@ -16,18 +16,19 @@ public class LauncherAppl {
         String serverIP = "127.0.0.1";
         int port = 9000;
         joinChat(serverIP, port);
-        Thread.sleep(1000);
+        Thread.sleep(100);
 
 
     }
 
     private static void joinChat(String serverIP, int port) throws InterruptedException {
         try (Socket socket = new Socket(serverIP, port)) {
-            MsgSender sender = new MsgSender(socket, userName());
+            MsgSender sender = new MsgSender(socket);
             MsgReceiver receiver = new MsgReceiver(socket);
             System.out.println("You can start chatting!");
             Thread senderThread = new Thread(sender);
             Thread receiverThread = new Thread(receiver);
+
             receiverThread.setDaemon(true);
             senderThread.start();
             receiverThread.start();
