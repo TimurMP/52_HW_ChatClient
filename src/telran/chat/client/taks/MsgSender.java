@@ -35,23 +35,10 @@ public class MsgSender implements Runnable {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             Message messageObj = new Message(userName, null);
             messageObj.setMessage(bufferedReader.readLine());
-//            messageObj.setMessage(bufferedReader.readLine());
-//            String message = (bufferedReader.readLine());
-//            String fullMessage = (userName + " wrote " + "at " + LocalDateTime.now().format(dateFormatter) + "\n" + message);
-
 
             while (!"leave".equalsIgnoreCase(messageObj.getMessage())) {
-                messageObj.setTime(true);
-                oos.writeObject(messageObj);
-
-                System.out.println("-------------------------------\n");
+                oos.writeUnshared(messageObj);
                 messageObj.setMessage(bufferedReader.readLine());
-
-
-//                messageObj.setTime(true);
-//                message = bufferedReader.readLine();
-//                fullMessage = (userName + " wrote " + "at " + LocalDateTime.now().format(dateFormatter) + "\n" + message);
-
             }
 
         } catch (IOException e) {

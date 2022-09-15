@@ -24,6 +24,7 @@ public class Message implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+        this.time = LocalDateTime.now();
     }
 
     public void setTime(boolean set) {
@@ -45,10 +46,13 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "nickName='" + nickName + '\'' +
-                ", time=" + time +
-                ", message='" + message + '\'' +
-                '}';
+        return time.format(dateFormatter) + "  |  " + nickName + "\n" + message + "\n----------------------";
+
+
+//        return "Message{" +
+//                "nickName='" + nickName + '\'' +
+//                ", time=" + time +
+//                ", message='" + message + '\'' +
+//                '}';
     }
 }
